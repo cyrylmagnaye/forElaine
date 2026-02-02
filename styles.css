@@ -1,0 +1,585 @@
+/* =========================
+   Custom Fonts (Local Files)
+   ========================= */
+@font-face {
+  font-family: "astralaga";
+  src: url("./fonts/astralaga.ttf") format("truetype");
+  font-weight: 400;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: "deagoiset.regular";
+  src: url("./fonts/deagoiset.regular.otf") format("opentype");
+  font-weight: 400;
+  font-style: normal;
+}
+
+/* Buttons font (TrueType) */
+@font-face {
+  font-family: "charter";
+  src: url("./fonts/charter.ttf") format("truetype");
+  font-weight: 400;
+  font-style: normal;
+}
+
+/* =========================
+   Theme Variables (Responsive + Dark Mode)
+   ========================= */
+:root {
+  /* Palette */
+  --champagne: #f2e5c6;
+  --sand: #f2d9a0;
+  --burgundy: #75162d;
+  --maroon: #560b18;
+  --wine: #3b010b;
+
+  /* Page background */
+  --bg-1: #3b010b;
+  --bg-2: #560b18;
+
+  /* Text */
+  --text-light: #f2e5c6;
+
+  /* Buttons */
+  --btn: #75162d;
+  --btn-hover: #560b18;
+
+  /* Animations */
+  --float-duration: 15s;
+  --float-distance: 50px;
+  --bounce-speed: 0.5s;
+  --heart-explosion-size: 1.5;
+
+  /* Fonts */
+  --font-title: "deagoiset.regular", "Poppins", sans-serif; /* titles */
+  --font-subtitle: "astralaga", serif;                      /* subtitles */
+  --font-ui: "deagoiset.regular", "Poppins", sans-serif;    /* UI text */
+  --font-message: "astralaga", serif;                       /* questions + love messages + celebration */
+  --font-button: "charter", "Charter", "Georgia", serif;    /* buttons */
+
+  /* ✅ Keep layout consistent on all screens */
+  --card-max-w: 800px;
+
+  /* ✅ Card image is LANDSCAPE (match the picture exactly) */
+  --card-aspect: 4 / 3; /* If your image is 1024x768, this is perfect */
+
+  /* Padding keeps text inside the inner beige area */
+  --pad-y: clamp(40px, 4vw, 88px);
+  --pad-x: clamp(34px, 5vw, 100px);
+
+  /* Typography scales but stays proportional */
+  --h1-size: clamp(1.8rem, 2.5vw, 2.7rem);
+    --h2-size: clamp(0.95rem, 1.4vw, 1.5rem);
+  --p-size: clamp(0.8rem, 1vw, 0.95rem);
+
+  /* Buttons scale but keep the same look */
+  --btn-font: clamp(0.9rem, 1.15vw, 1rem);
+  --btn-pad-y: clamp(10px, 0.9vw, 14px);
+  --btn-pad-x: clamp(18px, 1.8vw, 28px);
+
+  --btn-font-sm: clamp(0.85rem, 1.05vw, 1rem);
+  --btn-pad-y-sm: clamp(8px, 0.85vw, 10px);
+  --btn-pad-x-sm: clamp(14px, 1.4vw, 18px);
+}
+
+body {
+  margin: 0;
+  min-height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  /* Background image (bg_pic1) with gradient fallback */
+  background: url("./assets/bg_pic1.png") center/cover no-repeat,
+              radial-gradient(circle at top, var(--bg-2), var(--bg-1));
+  background-color: var(--bg-1);
+  color: var(--text-light);
+
+  font-family: var(--font-ui);
+  overflow-x: hidden;
+}
+
+/* =========================
+   Floating elements
+   ========================= */
+.floating-elements {
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  z-index: 1;
+}
+
+.heart,
+.bear {
+  position: absolute;
+  font-size: 2rem;
+  animation: float var(--float-duration) linear infinite;
+  filter: drop-shadow(0 6px 10px rgba(0, 0, 0, 0.35));
+}
+
+@keyframes float {
+  0% { transform: translateY(100vh) translateX(0); }
+  100% { transform: translateY(-100px) translateX(var(--float-distance)); }
+}
+
+/* =========================
+   ✅ Card Container (EXACT like the picture)
+   ========================= */
+.container {
+  position: relative;
+  z-index: 2;
+
+  background: url("./assets/card.png") center / contain no-repeat;
+  background-color: transparent;
+
+  aspect-ratio: var(--card-aspect);
+
+  width: min(var(--card-max-w), 94vw);
+  height: auto;
+  max-height: 92vh;
+
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+
+  padding: var(--pad-y) var(--pad-x);
+
+  border-radius: 0;
+  box-shadow: none;
+}
+
+.container::before {
+  content: none !important;
+}
+
+@media (max-height: 650px) {
+  :root {
+    --pad-y: clamp(22px, 3vw, 55px);
+    --pad-x: clamp(18px, 3.5vw, 65px);
+  }
+}
+
+/* Responsive Typography for Mobile */
+@media (max-width: 768px) {
+  :root {
+    --h1-size: clamp(1.3rem, 3.5vw, 1.8rem);
+      --h2-size: clamp(0.8rem, 2.2vw, 1.1rem);
+    --p-size: clamp(0.85rem, 2vw, 1rem);
+    --pad-y: clamp(16px, 2.2vw, 36px);
+    --pad-x: clamp(16px, 3vw, 40px);
+  }
+
+  /* Tighten spacing so titles/buttons fit inside the card */
+  h1 { margin-bottom: 0.35rem; }
+  h2 { margin: 0.2rem 0 0.6rem 0; }
+  .cute-btn { margin: 6px; min-width: 90px; }
+  .love-meter { margin: 8px auto; padding: 6px 0; }
+}
+
+@media (max-width: 480px) {
+  :root {
+    --h1-size: clamp(1.1rem, 4vw, 1.5rem);
+      --h2-size: clamp(0.75rem, 2.5vw, 0.95rem);
+    --p-size: clamp(0.8rem, 2.2vw, 0.95rem);
+    --pad-y: clamp(12px, 2vw, 26px);
+    --pad-x: clamp(12px, 2.5vw, 28px);
+  }
+
+  /* Extra-tight mobile spacing */
+  h1 { margin-bottom: 0.25rem; }
+  h2 { margin: 0.15rem 0 0.45rem 0; }
+  .cute-btn { margin: 6px; min-width: 78px; }
+  .love-meter { margin: 6px auto; padding: 4px 0; }
+}
+
+/* =========================
+   Typography
+   ========================= */
+h1 {
+  font-family: var(--font-title);
+  font-weight: 400;
+  color: var(--wine);
+  margin: 0 0 0.7rem 0;
+  letter-spacing: 0.6px;
+  font-size: var(--h1-size);
+  line-height: 1.12;
+}
+
+h2 {
+  font-family: var(--font-subtitle);
+  font-weight: 400;
+  color: var(--wine);
+  margin: 0.35rem 0 1rem 0;
+  letter-spacing: 0.3px;
+  font-size: var(--h2-size);
+  line-height: 1.15;
+}
+
+/* Slightly larger, responsive font specifically for the final question text */
+#question3Text {
+  font-size: clamp(1.05rem, 2vw, 1.6rem);
+  line-height: 1.45;
+}
+
+/* 🔥 UPDATED: Tighter spacing for love messages */
+.container p,
+.love-meter p,
+#extraLove,
+#loveValue,
+.celebration-text,
+.question-text,
+#questionText,
+#question,
+.question {
+  font-family: var(--font-message);
+  color: var(--wine);
+
+  margin: 0.4rem 0 0.2rem 0; /* tighter vertical spacing */
+  font-size: var(--p-size);
+  line-height: 1.18; /* slightly tighter line height */
+}
+
+
+/* Slightly larger, responsive font specifically for the final question text */
+#question3Text {
+  font-size: clamp(1.05rem, 2vw, 1.6rem);
+  line-height: 1.5;
+}
+
+.container p,
+.love-meter p,
+#extraLove,
+#loveValue,
+.celebration-text,
+.question-text,
+#questionText,
+#question,
+.question {
+  font-family: var(--font-message);
+  color: var(--wine);
+  margin: 0.6rem 0;
+
+  font-size: var(--p-size);
+  line-height: 1.22;
+}
+
+.buttons,
+.button-row,
+.btn-row,
+.controls,
+.actions {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 14px;
+  flex-wrap: wrap;
+  width: 100%;
+}
+
+/* =========================
+   Buttons
+   ========================= */
+.cute-btn {
+  font-family: var(--font-button);
+  background: var(--btn);
+  border: none;
+
+  padding: var(--btn-pad-y) var(--btn-pad-x);
+  margin: 10px;
+
+  border-radius: 999px;
+  color: var(--champagne);
+  font-size: var(--btn-font);
+  line-height: 1;
+
+  cursor: pointer;
+  transition: transform 0.25s, background 0.25s, box-shadow 0.25s;
+  box-shadow: 0 10px 22px rgba(59, 1, 11, 0.30);
+
+  min-width: 110px;
+  text-align: center;
+}
+
+.cute-btn:hover {
+  transform: scale(1.06);
+  background: var(--btn-hover);
+  box-shadow: 0 14px 26px rgba(59, 1, 11, 0.40);
+}
+
+.hidden { display: none; }
+
+/* Secret answer */
+.secret-answer {
+  position: fixed;
+  bottom: 20px;
+  right: 20px;
+  opacity: 0.2;
+  transition: opacity 0.3s;
+  transform: scale(0.7);
+  z-index: 2;
+  animation: subtle-hint 2s infinite alternate;
+  animation-delay: 5s;
+}
+
+.secret-answer .cute-btn {
+  font-size: var(--btn-font-sm);
+  padding: var(--btn-pad-y-sm) var(--btn-pad-x-sm);
+  min-width: unset;
+}
+
+.secret-answer:hover {
+  opacity: 1;
+  animation: none;
+}
+
+@keyframes subtle-hint {
+  0% { opacity: 0.2; }
+  100% { opacity: 0.35; }
+}
+
+/* =========================
+   Love meter
+   ========================= */
+.love-meter {
+  position: relative;
+  width: min(520px, 92%);
+  margin: 14px auto;
+  overflow: visible;
+  padding: 8px 0;
+
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.love-meter p {
+  margin: 10px 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 8px;
+}
+
+.slider {
+  width: 100%;
+  height: 25px;
+  background: linear-gradient(to right, var(--burgundy), var(--maroon), var(--wine));
+  -webkit-appearance: none;
+  appearance: none;
+  outline: none;
+  border-radius: 15px;
+  box-shadow: 0 6px 18px rgba(59, 1, 11, 0.22);
+  transition: transform 0.2s ease;
+}
+
+.slider:hover { transform: scale(1.02); }
+
+.slider::-webkit-slider-runnable-track,
+.slider::-moz-range-track {
+  width: 100%;
+  height: 25px;
+  background: linear-gradient(to right, var(--burgundy), var(--maroon), var(--wine));
+  border-radius: 15px;
+  border: 2px solid rgba(242, 229, 198, 0.55);
+}
+
+.slider::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  width: 35px;
+  height: 35px;
+  background: linear-gradient(135deg, var(--sand), var(--champagne));
+  border-radius: 50%;
+  cursor: pointer;
+  margin-top: -5px;
+  border: 3px solid var(--burgundy);
+}
+
+.slider::-moz-range-thumb {
+  width: 35px;
+  height: 35px;
+  background: linear-gradient(135deg, var(--sand), var(--champagne));
+  border-radius: 50%;
+  cursor: pointer;
+  border: 3px solid var(--burgundy);
+}
+/* =========================
+   Celebration Layout: Side-by-Side
+   ========================= */
+
+.celebration-media {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+  gap: 5px;
+  padding: 0;
+  max-width: 100%;
+  margin: 0 auto;
+  background: none;
+  border: none;
+  width: auto;
+  overflow: visible;
+}
+
+/* LEFT SIDE — Video */
+.celebration-video-frame {
+  flex: 0 0 auto;
+  max-width: 200px;
+  border-radius: 0;
+  overflow: hidden;
+  box-shadow: none;
+  border: none;
+  background: transparent;
+}
+
+.celebration-video {
+  display: block;
+  width: 100%;
+  height: auto;
+  aspect-ratio: 4 / 3;
+  background: transparent;
+  object-fit: contain;
+}
+
+/* RIGHT SIDE — Message Text */
+#celebrationMessage {
+  flex: 0 0 auto;
+  display: block;
+  font-family: var(--font-message);
+  color: #3a1f1f;
+  text-align: left;
+  font-size: clamp(1rem, 1.3vw, 1.2rem); /* Desktop size */
+  line-height: 1.5;
+  padding: 0;
+  background: none;
+  border: none;
+  box-shadow: none;
+  margin: 0;
+  word-wrap: break-word;
+  overflow-wrap: break-word;
+  max-width: 280px;
+}
+
+/* Optional Greeting */
+.celebration-greeting {
+  font-family: var(--font-cursive, 'Brush Script MT', cursive);
+  font-size: clamp(1.4rem, 2vw, 1.8rem);
+  color: #a00038;
+  margin: 0;
+}
+
+/* Main Message */
+.celebration-text {
+  font-weight: 400;
+  margin: 0;
+}
+
+/* Emojis */
+#celebrationEmojis {
+  margin-top: 8px;
+  text-align: left;
+  margin-bottom: 16px;
+}
+
+/* =========================
+   📱 Mobile Font Adjustment
+   ========================= */
+
+@media (max-width: 768px) {
+  #celebrationMessage {
+    font-size: clamp(0.65rem, 0.7vw, 0.8rem); /* Smaller than 0.75–0.9 */
+    line-height: 1.4;
+  }
+}
+
+@media (max-width: 480px) {
+  #celebrationMessage {
+    font-size: clamp(0.6rem, 0.65vw, 0.75rem);
+  }
+}
+
+
+/* =========================
+   Responsive: Mobile Devices
+   ========================= */
+@media (max-width: 768px) {
+  :root {
+    --btn-font: clamp(0.85rem, 1.1vw, 1rem);
+    --btn-pad-y: clamp(10px, 0.9vw, 14px);
+    --btn-pad-x: clamp(18px, 1.8vw, 28px);
+    --btn-font-sm: clamp(0.75rem, 0.9vw, 0.9rem);
+    --btn-pad-y-sm: clamp(6px, 0.7vw, 8px);
+    --btn-pad-x-sm: clamp(12px, 1.2vw, 16px);
+  }
+
+  .celebration-media {
+    gap: 8px;
+  }
+
+  .celebration-video-frame {
+    max-width: 140px;
+  }
+
+  #celebrationMessage {
+    max-width: 200px;
+    font-size: clamp(0.9rem, 2.5vw, 1rem);
+  }
+}
+
+@media (max-width: 480px) {
+  :root {
+    --btn-font: clamp(0.75rem, 1.5vw, 0.95rem);
+    --btn-pad-y: clamp(8px, 1.2vw, 12px);
+    --btn-pad-x: clamp(14px, 2.2vw, 22px);
+    --btn-font-sm: clamp(0.65rem, 1.2vw, 0.8rem);
+    --btn-pad-y-sm: clamp(5px, 0.9vw, 7px);
+    --btn-pad-x-sm: clamp(10px, 1.5vw, 14px);
+  }
+
+  .celebration-media {
+    gap: 3px;
+  }
+
+  .celebration-video-frame {
+    max-width: 110px;
+  }
+
+  #celebrationMessage {
+    max-width: 150px;
+    font-size: clamp(0.85rem, 2.8vw, 0.95rem);
+  }
+}
+
+/* =========================
+   Music button
+   ========================= */
+.music-controls {
+  position: fixed;
+  top: 20px;
+  right: 20px;
+  z-index: 1000;
+}
+
+.music-btn {
+  font-family: var(--font-button);
+  background: var(--btn);
+  color: var(--champagne);
+  border: none;
+
+  padding: var(--btn-pad-y) var(--btn-pad-x);
+  border-radius: 999px;
+  cursor: pointer;
+  font-size: var(--btn-font);
+  line-height: 1;
+
+  transition: all 0.25s ease;
+  box-shadow: 0 10px 22px rgba(0, 0, 0, 0.30);
+}
+
+.music-btn:hover {
+  transform: scale(1.05);
+  background: var(--btn-hover);
+}
